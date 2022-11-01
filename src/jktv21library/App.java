@@ -38,7 +38,7 @@ public class App {
         dataManager  = new DataManager();
         books = dataManager.loadBooksFromFile();
         readers = dataManager.loadReaderFromFile();
-        histories = new History[0];
+        histories = dataManager.loadHistoriesFromFile();
         //testAddBook();
         //testAddReader();
     }
@@ -78,6 +78,7 @@ public class App {
                 case 3:
                     System.out.println("3. Выдать книгу");
                     addHistories(historyManager.takeOnBook(readers,books));
+                    dataManager.saveHistoriesToFile(histories);
                     break;
                 case 4:
                     System.out.println("4. Вернуть книгу");
