@@ -12,6 +12,7 @@ import entity.Reader;
 import java.util.Arrays;
 import java.util.Scanner;
 import managers.BookManager;
+import managers.DataManager;
 import managers.HistoryManager;
 import managers.ReaderManager;
 
@@ -24,6 +25,7 @@ public class App {
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
+    private final DataManager dataManager;
     private Book[] books;
     private Reader[] readers;
     private History[] histories;
@@ -33,12 +35,12 @@ public class App {
         bookManager = new BookManager();
         readerManager = new ReaderManager();
         historyManager = new HistoryManager();
-        
-        books = new Book[0];
-        readers = new Reader[0];
+        dataManager  = new DataManager();
+        books = dataManager.loadBooksFromFile();
+        readers = dataManager.loadReaderFromFile();
         histories = new History[0];
-        testAddBook();
-        testAddReader();
+        //testAddBook();
+        //testAddReader();
     }
     
     public void run(){
@@ -66,10 +68,12 @@ public class App {
                 case 1:
                     System.out.println("Выбрана задача: 1. Добавить книгу");
                     addBook(bookManager.createBook());
+                    dataManager.saveBooksToFile(books);
                     break;
                 case 2:
                     System.out.println("2. Добавить читателя");
                     addReader(readerManager.createReader());
+                    dataManager.saveReadersToFile(readers);
                     break;
                 case 3:
                     System.out.println("3. Выдать книгу");
