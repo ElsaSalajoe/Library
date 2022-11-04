@@ -17,15 +17,17 @@ public class History implements Serializable{
     private Book book;
     private Date takeOnBook;
     private Date returnBook;
+    private int countBooksInLibrary;
 
     public History() {
     }
 
-    public History(Reader reader, Book book, Date takeOnBook, Date returnBook) {
+    public History(Reader reader, Book book, Date takeOnBook, Date returnBook, int countBooksInLibrary) {
         this.reader = reader;
         this.book = book;
         this.takeOnBook = takeOnBook;
         this.returnBook = returnBook;
+        this.countBooksInLibrary = countBooksInLibrary;
     }
 
     public Date getReturnBook() {
@@ -59,6 +61,14 @@ public class History implements Serializable{
     public void setTakeOnBook(Date takeOnBook) {
         this.takeOnBook = takeOnBook;
     }
+    
+    public int getCountBooksInLibrary() {
+        return countBooksInLibrary;
+    }
+
+    public void setCountBooksInLibrary(int countBooksInLibrary) {
+        this.countBooksInLibrary = countBooksInLibrary;
+    }
 
     @Override
     public String toString() {
@@ -66,7 +76,8 @@ public class History implements Serializable{
                 + "reader=" + reader 
                 + ", book=" + book 
                 + ", takeOnBook=" + takeOnBook 
-                + ", returnBook=" + returnBook 
+                + ", returnBook=" + returnBook
+                + ", countBooksInLibrary=" + countBooksInLibrary 
                 + '}';
     }
     

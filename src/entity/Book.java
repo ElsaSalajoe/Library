@@ -15,15 +15,17 @@ import java.util.Arrays;
 
 public class Book implements Serializable{
     private String title;
+    private int countBooksInLibrary;
     private Author[] authors = new Author[0]; 
 
     public Book() {
         
     }
 
-    public Book(String title, Author[] authors) {
+    public Book(String title, Author[] authors, int countBooksInLibrary) {
         this.title = title;
         this.authors = authors;
+        this.countBooksInLibrary = countBooksInLibrary;
     }
 
     public Author[] getAuthors() {
@@ -41,12 +43,21 @@ public class Book implements Serializable{
     public void setTitle(String title) {
         this.title = title;
     }
+    
+    public int getCountBooksInLibrary() {
+        return countBooksInLibrary;
+    }
 
+    public void setCountBooksInLibrary(int countBooksInLibrary) {
+        this.countBooksInLibrary = countBooksInLibrary;
+    }
+    
     @Override
     public String toString() {
         return "Book{"
                 + "title=" + title 
                 + ", authors=" + Arrays.toString(authors)
+                + ", countBooksInLibrary=" + countBooksInLibrary
                 + '}';
     }
 
@@ -72,7 +83,6 @@ public class Book implements Serializable{
         //копируем ссылку на новый массив в книгу
         this.setAuthors(newAuthors);
     }
-    
-    
+
     
 }

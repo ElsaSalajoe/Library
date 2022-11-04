@@ -41,7 +41,10 @@ public class HistoryManager {
         bookManager.printListBooks(books);
         System.out.print("Выберите номер книги из списка: ");
         int numberBook = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Выберите количество выдаваемых книг: ");
+        int countBooksBuyReader = scanner.nextInt(); scanner.nextLine();
         History history = new History();
+        books[numberBook-1].setCountBooksInLibrary(books[numberBook-1].getCountBooksInLibrary()-countBooksBuyReader);
         history.setBook(books[numberBook - 1]);
         history.setReader(readers[numberReader - 1]);
         history.setTakeOnBook(new GregorianCalendar().getTime());
@@ -53,10 +56,11 @@ public class HistoryManager {
         for (int i = 0; i < histories.length; i++) {
             History history = histories[i];
             if(history.getReturnBook() == null)
-            System.out.printf("%d. %s. Выдана: %s г. Читает: %s %s. Телефон: %s%n"
+            System.out.printf("%d. %s. Выдана: %s г. в количестве: %d Читает: %s %s. Телефон: %s%n"
                     ,i+1
                     ,history.getBook().getTitle()
                     ,sdf.format(history.getTakeOnBook())
+                    ,history.getBook().getCountBooksInLibrary()
                     ,history.getReader().getFirstname()
                     ,history.getReader().getLastname()
                     ,history.getReader().getPhone()
