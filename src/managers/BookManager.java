@@ -156,5 +156,64 @@ public class BookManager {
         return authors;
     }
 
+    public Book changeBook() {
+        DataBaseManager dataBaseManager = new DataBaseManager();
+        List<Book> listBooks = dataBaseManager.loadBooks();
+        printListBooks(listBooks);
+        System.out.println("  ");
+        int numBook = scanner.nextInt(); scanner.hasNextLine();
+        Book book = editBook(listBooks.get(numBook-1));
+        return book;
+    }
     
+    private Book editBook(Book book){
+        System.out.println("Название книги: "+book.getTitle());
+        System.out.println("Изменить название книги? (y/n)");
+        String edit = scanner.nextLine();
+        if(edit.equals("y")){
+            System.out.print("Введите новое название книги: ");
+            book.setTitle(scanner.nextLine());
+        }
+        System.out.println("Авторов у книги "+book.getAuthors().size());
+        System.out.println("Изменить количество авторов? (y/n)");
+        edit = scanner.nextLine();
+        if(edit.equals("y")){// Меняем количество авторов
+            System.out.print("Введите новое количество авторов: ");
+            int newCountAuthorsInBook = scanner.nextInt();
+            scanner.nextLine();
+         // количество авторов может быть больше или меньше.
+            if(newCountAuthorsInBook < book.getAuthors().size()){
+              //если меньше, выводим нумерованный список авторов и просим указать какого удалить
+               // вычисляем на сколько меньше 
+                int deltaAuthors = book.getAuthors().size() - newCountAuthorsInBook;
+                for (int n = 0; n < deltaAuthors; n++) {
+                    //удаляем лишних (deltaAuthors) авторов из книги
+                    int numberAuthorForDelete = deleteNumberAuthorBook(book.getAuthors());
+                    book.removeAuthor(numberAuthorForDelete);
+                }
+            }else{
+                for (int i = 0; i < newCountAuthorsInBook; i++) {
+                    //если счетчик больше количесвтва авторов
+                    if(i >= book.getAuthors().size()){
+                        // добаляем нового автора в книгу
+                        Author newAuthor = new Author();
+                        System.out.print("Введите имя автора "+(i+1)+": ");
+                        newAuthor.setFirstname(scanner.nextLine());
+                        System.out.print("Введите фамилию атора "+(i+1)+": ");
+                        newAuthor.setLastname(scanner.nextLine());
+                        book.addAuthor(newAuthor);
+                    }else{
+                        book.setAuthors(changeAuthorBook(book.getAuthors()));
+                    }
+                }
+            }
+        }
+        System.out.println("Изменить существующих авторов? (y/n)");
+        edit = scanner.nextLine();
+        if(edit.equals("y")){// Меняем существующих авторов
+            book.setAuthors(changeAuthorBook(book.getAuthors()));
+        }
+        return book;
+    }
+   
 }

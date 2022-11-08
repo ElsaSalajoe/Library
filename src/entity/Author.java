@@ -4,37 +4,40 @@
  * and open the template in the editor.
  */
 package entity;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ *
+ * @author Melnikov
+ */
 @Entity
 public class Author implements Serializable{
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @Id
+    private Long id;
     private String firstname;
     private String lastname;
 
     public Author() {
     }
 
-    public Author(String firstname, String lastname, Long Id) {
-        this.Id = Id;
+    public Author(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
     
     public Long getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(Long Id) {
-        this.Id = Id;
+    public void setId(Long id) {
+        this.id = id;
     }
-    
     public String getLastname() {
         return lastname;
     }
@@ -53,11 +56,9 @@ public class Author implements Serializable{
     
     @Override
     public String toString() {
-        return "Author{"
-                + "Id=" + Id 
-                + "firstname=" + firstname
-                + ", lastname=" + lastname
-                + '}';
+        return "Author{" + "firstname=" + firstname + ", lastname=" + lastname + '}';
     }
+
+    
     
 }

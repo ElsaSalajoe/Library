@@ -5,7 +5,9 @@
  */
 package managers;
 
+import entity.Book;
 import entity.Reader;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -19,28 +21,34 @@ public class ReaderManager {
         scanner = new Scanner(System.in);
     }
     
-    public Reader createReader(){
+   public Reader createReader(){
         Reader reader = new Reader();
-        System.out.print("Имя читателя: ");
+        System.out.print("Введите имя читателя: ");
         reader.setFirstname(scanner.nextLine());
-        System.out.print("Фамилия читателя: ");
+        System.out.print("Укажите фамилию читателя: ");
         reader.setLastname(scanner.nextLine());
-        System.out.print("Телефон читателя: ");
+        System.out.print("Укажите контактный номер телефона: ");
         reader.setPhone(scanner.nextLine());
         return reader;
-    } 
-    public void printListReaders(Reader[] readers){
-        for (int i = 0; i < readers.length; i++) {
+    }
+   
+   public void printListReaders(List<Reader> readers){
+        
+        for (int i = 0; i < readers.size(); i++) {
+            Reader reader = readers.get(i);
+            
             System.out.printf("%d. %s %s. Телефон: %s%n"
-                    ,i+1
-                    ,readers[i].getFirstname()
-                    , readers[i].getLastname()
-                    , readers[i].getPhone()
+                            ,i+1
+                            ,reader.getFirstname()
+                            , reader.getLastname()
+                            , reader.getPhone()
             );
+            System.out.println();
         }
     }
+    
 
-    public Reader[] changeReader(Reader[] readers) {
+   /* public List<Reader> changeReader(List<Reader> readers) {
         System.out.println("Список читателей: ");
         this.printListReaders(readers);
         System.out.print("Выберите номер читателя из списка: ");
@@ -68,5 +76,5 @@ public class ReaderManager {
         }
         System.out.println("Измененный читатель: "+readers[numberReader - 1].toString());
         return readers;
-    }
+    }*/
 }

@@ -9,11 +9,13 @@ import entity.Author;
 import entity.Book;
 import entity.History;
 import entity.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import managers.DataBaseManager;
 import managers.BookManager;
 import managers.DataManager;
-import managers.DatabaseManager;
 import managers.HistoryManager;
 import managers.ReaderManager;
 
@@ -26,27 +28,25 @@ public class App {
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
-    //private final DataManager dataManager;
-    private final DatabaseManager databaseManager;
-    private Book[] books;
-    private Reader[] readers;
+    private final DataBaseManager databaseManager;
+    private final DataManager dataManager;
+//    private List<Book> books;
+//    private final List<Reader> readers;
     private History[] histories;
 
     public App() {
-        books = new Book[0];
-        readers = new Reader[0];
-        histories = new History[0];
+//        books = new ArrayList<>();
+ //       readers= new ArrayList<>();
         scanner = new Scanner(System.in);
         bookManager = new BookManager();
         readerManager = new ReaderManager();
         historyManager = new HistoryManager();
-        //dataManager  = new DataManager();
-        databaseManager  = new DatabaseManager();
-        //books = dataManager.loadBooksFromFile();
-        //readers = dataManager.loadReaderFromFile();
-        //histories = dataManager.loadHistoriesFromFile();
-        //testAddBook();
-        //testAddReader();
+        databaseManager = new DataBaseManager();
+//        books = databaseManager.loadBooks();
+        dataManager = new DataManager();
+//        books = dataManager.loadBooksFromFile();
+//        readers = dataManager.loadReadersFromFile();
+//        histories = dataManager.loadHistoriesFromFile();
     }
     
     public void run(){
@@ -73,51 +73,50 @@ public class App {
                     break;
                 case 1:
                     System.out.println("Выбрана задача: 1. Добавить книгу");
-                    addBook(bookManager.createBook());
-                    databaseManager.saveBooks(books);
-                    //dataManager.saveBooksToFile(books);
+                    Book book = bookManager.createBook();
+                    databaseManager.saveBook(book);
+//                    books.add(bookManager.createBook());
+//                    databaseManager.saveBooks(books);
+//                    dataManager.saveBooksToFile(books);
                     break;
                 case 2:
                     System.out.println("2. Добавить читателя");
-                    addReader(readerManager.createReader());
-                    databaseManager.saveReaders(readers);
-                    //dataManager.saveReadersToFile(readers);
+//                    readers.add(readerManager.createReader());
+//                    dataManager.saveReadersToFile(readers);
                     break;
                 case 3:
                     System.out.println("3. Выдать книгу");
-                    addHistories(historyManager.takeOnBook(readers,books));
-                    //databaseManager.saveHistory(histories);
-                    //dataManager.saveHistoriesToFile(histories);
+//                    addHistories(historyManager.takeOnBook(readers,books));
+//                    dataManager.saveHistoriesToFile(histories);
                     break;
                 case 4:
                     System.out.println("4. Вернуть книгу");
-                    histories = historyManager.returnBook(histories, books);
-                    //databaseManager.saveHistory(histories);
-                    //dataManager.saveHistoriesToFile(histories);
+//                    histories = historyManager.returnBook(histories);
+//                    dataManager.saveHistoriesToFile(histories);
                     break;
                 case 5:
                     System.out.println("5. Список книг");
-                    bookManager.printListBooks(books);
-                    databaseManager.saveBooks(books);
+                    bookManager.printListBooks(databaseManager.loadBooks());
                     break;
                 case 6:
                     System.out.println("6. Список читателей");
-                    readerManager.printListReaders(readers);
+//                    readerManager.printListReaders(readers);
                     break;
                 case 7:
                     System.out.println("7. Список выданных книг");
-                    historyManager.printListReadingBooks(histories);
-                    //dataManager.saveHistoriesToFile(histories);
+ //                   historyManager.printListReadingBooks(histories);
                     break;
                 case 8:
                     System.out.println("8. Изменить данные читателя");
-                    readers = readerManager.changeReader(readers);
-                    //dataManager.saveReadersToFile(readers);
+//                    readers = readerManager.changeReader(readers);
+//                    dataManager.saveReadersToFile(readers);
                     break;
                 case 9:
                     System.out.println("9. Редактирование книги");
-                    books = bookManager.changeBook(books);
-                    //dataManager.saveBooksToFile(books);
+                    book = bookManager.changeBook();
+                    databaseManager.saveBook(book);
+//                    books = bookManager.changeBook(books);
+//                    dataManager.saveBooksToFile(books);
                     break;
                 default:
                     System.out.println("Выберите номер функции из списка!");
@@ -126,33 +125,36 @@ public class App {
         System.out.println("Пока!");
     }
 
-    private void addBook(Book book){
-        books = Arrays.copyOf(books, books.length+1);
-        books[books.length-1] = book;
-    }
+//    private void addBook(Book book){
+//        books = Arrays.copyOf(books, books.length+1);
+//        books[books.length-1] = book;
+//    }
+
+//    private void addReader(Reader reader) {
+//        readers = Arrays.copyOf(readers, readers.length + 1);
+//        readers[readers.length - 1] = reader;
+//   }
     
-    private void addReader(Reader reader) {
-        readers = Arrays.copyOf(readers, readers.length + 1);
-        readers[readers.length - 1] = reader;
-    }
     private void addHistories(History history) {
         histories = Arrays.copyOf(histories, histories.length + 1);
         histories[histories.length - 1] = history;
     }
     
-    /*private void testAddBook(){
-        Book book = new Book();
-        book.setTitle("Voina i mir");
-        Author author = new Author("Lev", "Tolstoy");
-        book.addAuthor(author);
-        this.books = Arrays.copyOf(this.books, this.books.length + 1);
-        this.books[this.books.length - 1] = book;
-    }
-    private void testAddReader(){
-        Reader reader = new Reader("Ivan", "Ivanov","56564567");
-        readers = Arrays.copyOf(readers, readers.length + 1);
-        readers[readers.length - 1] = reader;
-    }*/
+//    private void testAddBook(){
+//        Book book = new Book();
+//        book.setTitle("Voina i mir");
+//        Author author = new Author("Lev", "Tolstoy");
+//        book.addAuthor(author);
+//        this.books = Arrays.copyOf(this.books, this.books.length + 1);
+//        this.books[this.books.length - 1] = book;
+//    }
+//    private void testAddReader(){
+//        Reader reader = new Reader("Ivan", "Ivanov","56564567");
+//        readers = Arrays.copyOf(readers, readers.length + 1);
+//        readers[readers.length - 1] = reader;
+//    }
+
+    
 
     
 }

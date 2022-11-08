@@ -10,6 +10,7 @@ import entity.History;
 import entity.Reader;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,7 +28,7 @@ public class HistoryManager {
         bookManager = new BookManager();
     }
     
-    public History takeOnBook(Reader[] readers, Book[] books){
+    /*public History takeOnBook(Reader[] readers, List<Book> books){
         //из списка читателей выбрать номер читателя
         //из списка книг выбрать номер книги
         //инициировать поля History
@@ -41,11 +42,8 @@ public class HistoryManager {
         bookManager.printListBooks(books);
         System.out.print("Выберите номер книги из списка: ");
         int numberBook = scanner.nextInt(); scanner.nextLine();
-        System.out.print("Выберите количество выдаваемых книг: ");
-        int countBooksBuyReader = scanner.nextInt(); scanner.nextLine();
         History history = new History();
-        books[numberBook-1].setCountBooksInLibrary(books[numberBook-1].getCountBooksInLibrary()-countBooksBuyReader);
-        history.setBook(books[numberBook - 1]);
+        history.setBook(books.get(numberBook - 1));
         history.setReader(readers[numberReader - 1]);
         history.setTakeOnBook(new GregorianCalendar().getTime());
         return history;
@@ -68,17 +66,14 @@ public class HistoryManager {
         }
     }
 
-    public History[] returnBook(History[] histories, Book[] books) {
+    public History[] returnBook(History[] histories) {
         //выбрать номер истории с выданной книгой из списка
         //прописать дату возврата в историю
         System.out.println("Список выданных книг: ");
         this.printListReadingBooks(histories);
         System.out.println("Выберите номер возвращаемой книги из списка: ");
         int numberHistory = scanner.nextInt(); scanner.nextLine();
-        System.out.print("Выберите количество возвращаемых книг: ");
-        int countBooksBuyLibrary = scanner.nextInt(); scanner.nextLine();
         histories[numberHistory - 1].setReturnBook(new GregorianCalendar().getTime());
-        histories[numberHistory-1].setCountBooksInLibrary(histories[numberHistory-1].getCountBooksInLibrary()+histories[numberHistory-1].getCountBooksInLibrary());
         return histories;
-    }
+    }*/
 }

@@ -5,10 +5,12 @@
  */
 package entity;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -16,6 +18,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,32 +28,28 @@ import javax.persistence.Id;
  */
 @Entity
 public class Book implements Serializable{
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String title;
-    private int countBooksInLibrary;
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "book_authos")
-    private List<Author> authors = new ArrayList<>(); 
-
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Author> authors; 
+    
     public Book() {
-        
+        authors = new ArrayList<>();
     }
 
-    public Book(String title, List<Author> authors, int countBooksInLibrary, Long Id) {
-        this.Id = Id;
+    public Book(String title, List<Author> authors) {
         this.title = title;
         this.authors = authors;
-        this.countBooksInLibrary = countBooksInLibrary;
     }
-
+    
     public Long getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(Long Id) {
-        this.Id = Id;
+    public void setId(Long id) {
+        this.id = id;
     }
     public List<Author> getAuthors() {
         return authors;
@@ -65,23 +66,13 @@ public class Book implements Serializable{
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    public int getCountBooksInLibrary() {
-        return countBooksInLibrary;
-    }
 
-    public void setCountBooksInLibrary(int countBooksInLibrary) {
-        this.countBooksInLibrary = countBooksInLibrary;
-    }
-    
     @Override
     public String toString() {
         Author[] authorsArray = (Author[])authors.toArray();
         return "Book{"
-                + "Id=" + Id 
                 + "title=" + title 
- //               + ", authors=" + Arrays.toString(authorsArray)
-                + ", countBooksInLibrary=" + countBooksInLibrary
+//                + ", authors=" + Arrays.toString(authorsArray)
                 + '}';
     }
 
@@ -92,7 +83,8 @@ public class Book implements Serializable{
     }
     
     public void removeAuthor(int numberOfAuthor){
-        //обнуляем указанного автора (по индексу)
+        
+/*//обнуляем указанного автора (по индексу)
         Author[] authors = (Author[])this.authors.toArray();
         //создаем массив с количеством элементов на 1 меньше
         Author[] newAuthors = new Author[authors.length-1];
@@ -105,10 +97,11 @@ public class Book implements Serializable{
             }
         }
         //копируем ссылку на новый массив в книгу
-        this.authors = Arrays.asList(newAuthors);
+        this.authors = Arrays.asList(newAuthors);*/
     }
 
     
-
+    
+    
     
 }
