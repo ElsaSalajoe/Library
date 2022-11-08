@@ -56,11 +56,10 @@ public class HistoryManager {
         for (int i = 0; i < histories.length; i++) {
             History history = histories[i];
             if(history.getReturnBook() == null)
-            System.out.printf("%d. %s. Выдана: %s г. в количестве: %d Читает: %s %s. Телефон: %s%n"
+            System.out.printf("%d. %s. Выдана: %s г. Читает: %s %s. Телефон: %s%n"
                     ,i+1
                     ,history.getBook().getTitle()
                     ,sdf.format(history.getTakeOnBook())
-                    ,history.getBook().getCountBooksInLibrary()
                     ,history.getReader().getFirstname()
                     ,history.getReader().getLastname()
                     ,history.getReader().getPhone()
@@ -69,14 +68,17 @@ public class HistoryManager {
         }
     }
 
-    public History[] returnBook(History[] histories) {
+    public History[] returnBook(History[] histories, Book[] books) {
         //выбрать номер истории с выданной книгой из списка
         //прописать дату возврата в историю
         System.out.println("Список выданных книг: ");
         this.printListReadingBooks(histories);
         System.out.println("Выберите номер возвращаемой книги из списка: ");
         int numberHistory = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Выберите количество возвращаемых книг: ");
+        int countBooksBuyLibrary = scanner.nextInt(); scanner.nextLine();
         histories[numberHistory - 1].setReturnBook(new GregorianCalendar().getTime());
+        histories[numberHistory-1].setCountBooksInLibrary(histories[numberHistory-1].getCountBooksInLibrary()+histories[numberHistory-1].getCountBooksInLibrary());
         return histories;
     }
 }

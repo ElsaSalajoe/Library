@@ -7,12 +7,17 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-/**
- *
- * @author Melnikov
- */
+
+@Entity
 public class History implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private Reader reader;
     private Book book;
     private Date takeOnBook;
@@ -22,12 +27,21 @@ public class History implements Serializable{
     public History() {
     }
 
-    public History(Reader reader, Book book, Date takeOnBook, Date returnBook, int countBooksInLibrary) {
+    public History(Reader reader, Book book, Date takeOnBook, Date returnBook, int countBooksInLibrary, Long Id) {
+        this.Id = Id;
         this.reader = reader;
         this.book = book;
         this.takeOnBook = takeOnBook;
         this.returnBook = returnBook;
         this.countBooksInLibrary = countBooksInLibrary;
+    }
+    
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public Date getReturnBook() {
@@ -72,7 +86,8 @@ public class History implements Serializable{
 
     @Override
     public String toString() {
-        return "History{" 
+        return "History{"
+                + "Id=" + Id 
                 + "reader=" + reader 
                 + ", book=" + book 
                 + ", takeOnBook=" + takeOnBook 

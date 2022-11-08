@@ -6,12 +6,16 @@
 package entity;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-/**
- *
- * @author Melnikov
- */
+@Entity
 public class Reader implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String firstname;
     private String lastname;
     private String phone;
@@ -19,12 +23,21 @@ public class Reader implements Serializable{
     public Reader() {
     }
 
-    public Reader(String firstname, String lastname, String phone) {
+    public Reader(String firstname, String lastname, String phone, Long Id) {
+        this.Id = Id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;
     }
+    
+    public Long getId() {
+        return Id;
+    }
 
+    public void setId(Long Id) {
+        this.Id = Id;
+    }
+    
     public String getLastname() {
         return lastname;
     }
@@ -51,7 +64,8 @@ public class Reader implements Serializable{
 
     @Override
     public String toString() {
-        return "Reader{" 
+        return "Reader{"
+                + "Id=" + Id 
                 + "firstname=" + firstname 
                 + ", lastname=" + lastname 
                 + ", phone=" + phone 

@@ -5,23 +5,36 @@
  */
 package entity;
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-/**
- *
- * @author Melnikov
- */
+@Entity
 public class Author implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String firstname;
     private String lastname;
 
     public Author() {
     }
 
-    public Author(String firstname, String lastname) {
+    public Author(String firstname, String lastname, Long Id) {
+        this.Id = Id;
         this.firstname = firstname;
         this.lastname = lastname;
     }
+    
+    public Long getId() {
+        return Id;
+    }
 
+    public void setId(Long Id) {
+        this.Id = Id;
+    }
+    
     public String getLastname() {
         return lastname;
     }
@@ -40,7 +53,11 @@ public class Author implements Serializable{
     
     @Override
     public String toString() {
-        return "Author{" + "firstname=" + firstname + ", lastname=" + lastname + '}';
+        return "Author{"
+                + "Id=" + Id 
+                + "firstname=" + firstname
+                + ", lastname=" + lastname
+                + '}';
     }
     
 }
